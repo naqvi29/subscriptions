@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* background-color: black; */
+        }
+        
+        body {
+            /* background-image: url(./img/photo-1508672019048-805c876b67e2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
+            background-color: #EEEEEE !important;
+        }
+        
+        .header-1 {
+            background-color: #fff !important;
+            /* border: 2px solid black; */
+            border-radius: 10px;
+            text-align: center;
+            justify-content: center;
+            place-items: center;
+            padding: 10px;
+            background-color: rgba( 247, 247, 247, 0.5);
+            box-shadow: 1px 1px 2px 1px rgb(155 153 153);
+            height: 90vh;
+            width: 30%;
+            margin: auto;
+            margin-top: 30px;
+        }
+        
+        .logo img {
+            padding-top: 10px;
+            width: 200px;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .form {
+            margin: 40px;
+        }
+        
+        .inp1 {
+            margin: 10px;
+            /* border: 2px solid black !important; */
+        }
+        
+        .inp1:hover {
+            box-shadow: 1px 1px 5px rgb(124, 123, 123);
+        }
+        
+        .login-btn {
+            width: 100% !important;
+            /* background-color: black !important; */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .hr {
+            /* height: 5px !important; */
+            border: 1px solid rgb(121, 119, 119);
+        }
+        
+        .img-1 {
+            height: 50px !important;
+        }
+        
+        .img-2 {
+            height: 66px !important;
+        }
+        
+        .p-ankar {
+            font-weight: 500;
+        }
+        
+        @media only screen and (max-width: 600px) {
+            .header-1 {
+                background-color: #fff !important;
+                /* border: 2px solid black; */
+                border-radius: 10px;
+                text-align: center;
+                justify-content: center;
+                place-items: center;
+                padding: 10px;
+                background-color: rgba( 247, 247, 247, 0.5);
+                box-shadow: 1px 1px 2px 1px rgb(155 153 153);
+                height: 90vh;
+                width: 90%;
+                margin: auto;
+                margin-top: 30px;
+            }
+        }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Login</title>
+
+</head>
+
+<body>
+
+
+    <section class="header-1 mobile-w-50">
+        {% if message|length > 1 %}
+        <div class="col-md-12">
+            <div class="alert alert-danger">{{ message }}</div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12">
+                <div class="logo">
+                    <img src="/static/img/aa.png    " class="img-fluid" alt="">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form">
+                    <h4 class="h4-form">Admin Login</h4>
+
+                    <form action="/login" method="POST">
+                        <input name="username" type="text" class="form-control inp1" placeholder="username">
+                        <input name="password" type="password" class="form-control inp1" placeholder="Password" id="myInput">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                        <label class="form-check-label text-bold" for="exampleCheck1">Display Password</label>
+                        <!-- <p class="forget-p"><a href="#"> Forget Password?</a></p> -->
+
+
+                        <button type="submit" class="login-btn btn btn-primary">
+                          Login
+                      </button>
+
+                        <hr class="hr">
+
+                       
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</body>
+
+</html>
