@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %} Add a new subscription {% endblock %}
+{% block title %} Edit subscription {% endblock %}
 {% block head %} 
 <style>
   [type="date"] {
@@ -37,54 +37,51 @@
 {% endblock %}
 {% block main %} 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    {% if data[0] == 'Family' %}
-    <h2 class="mt-2">Add a new {{data[0]}} Subscription</h2>
-    {% else %}
-    <h2 class="mt-2">Add a new {{data[0]}} &pound; Subscription</h2>
-    {% endif %}
+
+    <h2 class="mt-2">Edit {{data[0]}} &pound; Subscription</h2>
     <div class="container-fluid">
-    <form action="/add-subscription/{{data[1]}}" method="post">
+    <form action="/edit-subscription/{{data[1]}}/{{sub._id}}" method="post">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{sub.email}}">
         </div>
         <div class="mb-3">
           <label for="exampleInputName1" class="form-label">Name</label>
-          <input type="text" name="name" class="form-control" id="exampleInputName1">
+          <input type="text" name="name" class="form-control" id="exampleInputName1" value="{{sub.name}}">
         </div>
         <div class="mb-3">
           <label for="exampleInputetsy1" class="form-label">Etsy ID</label>
-          <input type="text" name="etsy_id" class="form-control" id="exampleInputetsy1">
+          <input type="text" name="etsy_id" class="form-control" id="exampleInputetsy1" value="{{sub.etsy_id}}">
         </div>
         <div class="mb-3">
           <label for="exampleInputperiod1" class="form-label">Period</label>
-          <input type="number" name="period" class="form-control" id="exampleInputperiod1">
+          <input type="number" name="period" class="form-control" id="exampleInputperiod1" value="{{sub.period}}">
         </div>
         <div class="mb-3">
           <label for="exampleInputsoldprice1" class="form-label">Sold Price</label>
-          <input type="number" name="sold_price" class="form-control" id="exampleInputsoldprice1" step="any">
+          <input type="number" name="sold_price" class="form-control" id="exampleInputsoldprice1" step="any" value="{{sub.sold_price}}">
         </div>
         <div class="mb-3">
           <label for="exampleInputnewprice1" class="form-label">New Price</label>
-          <input type="number" name="new_price" class="form-control" id="exampleInputnewprice1" step="any">
+          <input type="number" name="new_price" class="form-control" id="exampleInputnewprice1" step="any" value="{{sub.new_price}}">
         </div>
         <div>
           <label class="date_label" for="startdate">Start Date</label>
-          <input class="dateee" type="date" name="start_date" id="startdate">
+          <input class="dateee" type="text" name="start_date" id="startdate" value="{{sub.start_date}}">
         </div>
         <div>
           <label class="date_label" for="enddate">End Date</label>
-          <input class="dateee" type="date" name="end_date" id="enddate">
+          <input class="dateee" type="text" name="end_date" id="enddate" value="{{sub.end_date}}">
         </div>
         <div>
           <label class="date_label" for="renewal_date">Renewal Date</label>
-          <input class="dateee" type="date" name="renewal_date" id="renewal_date">
+          <input class="dateee" type="text" name="renewal_date" id="renewal_date" value="{{sub.renewal_date}}">
         </div>
         <div>
           <label class="date_label" for="payment_due">Payment Due</label>
-          <input class="dateee" type="date" name="payment_due" id="payment_due">
+          <input class="dateee" type="text" name="payment_due" id="payment_due" value="{{sub.payment_due}}">
         </div>
-        <button type="submit" class="btn btn-outline-success my-4">Add Subscription</button>
+        <button onclick="return conf_delete()" type="submit" class="btn btn-outline-success my-4">Update Subscription</button>
       </form>
     </div>
 </main>
