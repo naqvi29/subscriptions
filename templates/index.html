@@ -1,143 +1,62 @@
 {% extends 'layout.html' %}
 {% block title %}Home{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.esm.js" integrity="sha512-Jmi+uNSDc8pyBNQbRkhwxqTtRsAzq1p0IK7dSLjaudwIIqoG2giyWRvsh4bbPd2mNSbK1GyEiBUO86RSs428UQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.esm.min.js" integrity="sha512-SaY95UIbYlNfmc6tZOtqEWMyDHpIKJwXCPfDZNvgudlFZiJjMU3XJNrSnkVCL/3b7szsoU3hDXpUz6+TdLY1ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js" integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/helpers.esm.js" integrity="sha512-NrPCPNanqa1FM/aKCsKqZaEKs0X9M0JMVB9bjX8T2f50/LHQD+gHn0CX/ZN+kNkDPfXsQGfic21b/rKknQdC3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/helpers.esm.min.js" integrity="sha512-urWBnIv+F027G24xDNigjxvIuwnWlWy94W2yx77VkISKLzKSohOKOubMDhtEF6LZcEH7gctmNSpxDqIW/zMmUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock %}
 {% block main %}
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="chartjs-size-monitor">
-        <div class="chartjs-size-monitor-expand">
-            <div class=""></div>
-        </div>
-        <div class="chartjs-size-monitor-shrink">
-            <div class=""></div>
-        </div>
-    </div>
 
-    <h2>Section title</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                </tr>
-                <tr>
-                    <td>1,002</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                </tr>
-                <tr>
-                    <td>1,003</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                </tr>
-                <tr>
-                    <td>1,003</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,004</td>
-                    <td>text</td>
-                    <td>random</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                </tr>
-                <tr>
-                    <td>1,005</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                </tr>
-                <tr>
-                    <td>1,006</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,007</td>
-                    <td>placeholder</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>irrelevant</td>
-                </tr>
-                <tr>
-                    <td>1,008</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                </tr>
-                <tr>
-                    <td>1,009</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                </tr>
-                <tr>
-                    <td>1,010</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                </tr>
-                <tr>
-                    <td>1,011</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,012</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                </tr>
-                <tr>
-                    <td>1,013</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>visual</td>
-                </tr>
-                <tr>
-                    <td>1,014</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                </tr>
-                <tr>
-                    <td>1,015</td>
-                    <td>random</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>text</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<!-- <h2>Section title</h2> -->
+<canvas id="myChart"></canvas>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'polarArea',
+    // type: 'pie',
+    data: {
+        labels: ['35 Pound', '40 pound', '45 pound', '50 pound', '65 pound', 'Family','Zam'],
+        datasets: [{
+            label: '# of Subscriptions',
+            data: {{data}},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(103, 223, 81, 0.8)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(255, 206, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(103, 223, 81, 0.8)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+
+</script>
+ 
 </main>
+
 {% endblock %}

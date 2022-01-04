@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block title %} Edit Account {% endblock %}
 {% block main %} 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 groot-white">
     <h2 class="mt-2">Edit Account</h2>
     <div class="container-fluid">
     <form action="edit-admin-account" method=post>
@@ -17,7 +17,7 @@
           <label for="exampleInputName1" class="form-label">Confirm Password</label>
           <input type="text" name="c_password" class="form-control" id="exampleInputName1" >
         </div>
-        <button onclick="return conf_delete()" type="submit" class="btn btn-outline-success my-4">Update Account</button>
+        <button  style="color: white;" onclick="return conf_delete()" type="submit" class="btn btn-outline-success my-4">Update Account</button>
         {% if msg %} 
         <p style="color: red;">{{msg}}</p>
         {% endif %}

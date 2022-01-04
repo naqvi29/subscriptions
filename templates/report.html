@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block title %}Report{% endblock %}
+{% block head %}
+<style>
+    .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1.2em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #57010a;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #57010a;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #57010a;
+}
+</style>
+ {% endblock %}
+{% block main %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <h2 class="mt-2 groot-white">Report</h2>
+
+
+   <div class="table-responsive">
+    <table class="styled-table ">
+        <thead>
+            <tr>
+                <th>Total Subscriptions</th>
+                <th>Total Sold Price</th>
+                <th>Total 35 &pound; Subscriptions</th>
+                <th>Total 40 &pound; Subscriptions</th>
+                <th>Total 45 &pound; Subscriptions</th>
+                <th>Total 50 &pound; Subscriptions</th>
+                <th>Total 65 &pound; Subscriptions</th>
+                <th>Total Family Subscriptions</th>
+                <th>Total Zam Subscriptions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <!-- <td>{{total_subs}}</td>
+                <td>{{total_price}}</td> -->
+            </tr>
+            <tr class="active-row">
+                <td>{{total_subs}}</td>
+                <td>{{total_price}} &pound;</td>
+                <td>{{data[0]}}</td>
+                <td>{{data[1]}}</td>
+                <td>{{data[2]}}</td>
+                <td>{{data[3]}}</td>
+                <td>{{data[4]}}</td>
+                <td>{{data[5]}}</td>
+                <td>{{data[6]}}</td>
+            </tr>
+            <!-- and so on... -->
+        </tbody>
+    </table>
+   </div>
+
+
+</main>
+{% endblock %}

@@ -36,7 +36,7 @@
 </style>
 {% endblock %}
 {% block main %} 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 groot-white">
     {% if data[0] == 'Family' %}
     <h2 class="mt-2">Add a new {{data[0]}} Subscription</h2>
     {% else %}
@@ -84,7 +84,7 @@
           <label class="date_label" for="payment_due">Payment Due</label>
           <input class="dateee" type="date" name="payment_due" id="payment_due">
         </div>
-        <button type="submit" class="btn btn-outline-success my-4">Add Subscription</button>
+        <button type="submit"  style="color: white; font-weight: bolder;" class="btn btn-outline-success my-4">Add Subscription</button>
       </form>
     </div>
 </main>

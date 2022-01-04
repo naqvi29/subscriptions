@@ -3,13 +3,32 @@ from flask import Flask, render_template, jsonify, request, session, url_for, re
 import pymongo
 from bson.objectid import ObjectId
 from datetime import datetime
-from pymongo.message import query
 import os
 from flask_mail import Mail, Message
 import json
 from time import time
+from flask_apscheduler import APScheduler
+
+# set Flask scheduler configuration values
+class Config:
+    SCHEDULER_API_ENABLED = True
 
 app = Flask(__name__)
+
+# flask scheduler
+app.config.from_object(Config())
+# initialize scheduler
+scheduler = APScheduler()
+# if you don't wanna use a config, you can set options here:
+# scheduler.api_enabled = True
+scheduler.init_app(app)
+
+
+
+
+    
+
+
 
 # MONGOGB DATABASE CONNECTION
 connection_url = "mongodb://localhost:27017"
@@ -20,30 +39,69 @@ db = client[database_name]
 
 # configure secret key for session
 app.secret_key = '_5#y2L"F4Q8z\n\xec]/'
-
-# configure twillo api key for emails 
-# app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
-# app.config['MAIL_PORT'] = 587
-# app.config['MAIL_USE_TLS'] = True
-# app.config['MAIL_USERNAME'] = 'apikey'
-# app.config['MAIL_PASSWORD'] = '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'
-# mail = Mail(app)
-
-
-# mail 
-# @app.route("/ttest")
-# def test():
-#     msg = Message(subject='Test Email', sender='testwebtrica@gmail.com', recipients=['mali29april@gmail.com'])
-#     msg.body = 'This is a test email.'
-#     msg.extra_headers = {'X-SMTPAPI': json.dumps({'send_at': time() + 120})}
-#     mail.send(msg)
-#     return "True"
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_SERVER'] = 'smtp.ionos.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'fakhar@web-designpakistan.com'
+app.config['MAIL_PASSWORD'] = 'alikhaliqwebdesign!@#'
+app.config['MAIL_DEFAULT_SENDER'] = ('fakhar@web-designpakistan.com', "fakhar@web-designpakistan.com")
+mail = Mail(app)
 
 
+# interval example
+@scheduler.task('interval', id='do_job_1', seconds=60, misfire_grace_time=9)
+def job1():
+    print('Job 1 executed')
+    return sendmail()
+
+def sendmail():
+    try:
+        with app.app_context():
+            query = {"status":"pending"}
+            data = db.schedule_emails.find(query)
+            for i in data:
+                payment_due = i['payment_due']
+                payment_due = payment_due.date()
+                print(payment_due)
+                today = datetime.now()
+                today = today.date()
+                print(today)
+                # minutes_diff = (payment_due - today).total_seconds() / 60.0
+                # minutes_diff = round(minutes_diff)
+                # print(minutes_diff)
+                if today == payment_due:
+                    msg = Message("Your subscription is about to end!",sender='fakhar@web-designpakistan.com', recipients=[i['email']])
+                    msg.html = str("Dear, "+i['email']+"! Your Subscription is about to end soon please renew your subscription asap.")
+                    mail.send(msg)
+                    print("email sent")
+                    newvalues = {
+                    "$set": {
+                        'status': "completed"
+                    }
+                    }
+                    filter = {'_id': ObjectId(i['_id'])}
+                    db.schedule_emails.update_one(filter, newvalues)
+                    print("database updated")
+    except Exception as e:
+        return str(e)
+
+@app.route("/error")
+def error():
+    return render_template("error.html")
 @app.route("/")
 def index():
     if 'loggedin' in session:
-        return render_template("index.html")
+        one = db.thirty_five_pound.count()
+        two = db.fourty_pound.count()
+        three = db.fourty_five_pound.count()
+        four = db.fifty_pound.count()
+        five = db.sixty_five_pound.count()
+        six = db.family_subscriptions.count()
+        seven = db.zam_subscriptions.count()
+        data = [one,two,three,four,five,six,seven]
+        return render_template("index.html",data=data)
     else:
         return redirect(url_for("login"))
 
@@ -166,6 +224,20 @@ def family_subscriptions():
     else:
         return redirect(url_for("login"))
 
+# zam subsctiptions route
+@app.route("/zam_subscriptions")
+def zam_subscriptions():
+    if 'loggedin' in session:
+        data = db.zam_subscriptions.find()
+        lists = []
+        for i in data:            
+            i.update({"_id": str(i["_id"])})
+            lists.append(i)
+        print(lists)
+        return render_template("zam_subscriptions.html",data=lists)
+    else:
+        return redirect(url_for("login"))
+
 # add a new subscription route 
 @app.route("/add-subscription/<string:category>", methods = ['GET','POST'])
 def add_subscription(category):
@@ -181,6 +253,10 @@ def add_subscription(category):
             end_date = request.form.get("end_date")
             renewal_date = request.form.get("renewal_date")
             payment_due = request.form.get("payment_due")
+            if not email or not name or not etsy_id or not period or not sold_price or not new_price or not start_date or not end_date or not renewal_date or not payment_due:
+                return render_template("error.html",error = "Missing Data!")
+            payment_due2 = str(payment_due)+" 00:00:00.000000"
+            date_time = datetime.strptime(payment_due2, '%Y-%m-%d %H:%M:%S.%f')
 
             # convert datetime from string to object 
             start_date_obj = datetime.strptime(start_date,'%Y-%m-%d').strftime('%d-%b-%Y')
@@ -212,6 +288,15 @@ def add_subscription(category):
                 db.sixty_five_pound.insert_one(newEntry)
             elif category == "family_subscriptions":           
                 db.family_subscriptions.insert_one(newEntry)
+            elif category == "zam_subscriptions":           
+                db.zam_subscriptions.insert_one(newEntry)
+            # store schedule email data into mongodatabase 
+            new_schedule = {
+                "email": email,
+                "payment_due":date_time,
+                "status":"pending"
+            }
+            db.schedule_emails.insert_one(new_schedule)
             return redirect(url_for(category))
 
         else:
@@ -227,6 +312,8 @@ def add_subscription(category):
                 data = ["65","sixty_five_pound"]
             elif category == "family_subscriptions":
                 data = ["Family","family_subscriptions"]
+            elif category == "zam_subscriptions":
+                data = ["Zam","zam_subscriptions"]
             
             return render_template("add-subscription.html",data=data)
 
@@ -245,6 +332,10 @@ def date(category,id):
             db.fifty_pound.delete_one(query)
         elif category == "sixty_five_pound":           
             db.sixty_five_pound.delete_one(query)
+        elif category == "family_subscriptions":           
+            db.family_subscriptions.delete_one(query)
+        elif category == "zam_subscriptions":           
+            db.zam_subscriptions.delete_one(query)
         return redirect(url_for(category))
     else:
         return redirect(url_for("login"))
@@ -293,6 +384,8 @@ def edit_subscription(category,id):
                 db.sixty_five_pound.update_one(filter, newvalues)    
             elif category == "family_subscriptions":   
                 db.family_subscriptions.update_one(filter, newvalues)    
+            elif category == "zam_subscriptions":   
+                db.zam_subscriptions.update_one(filter, newvalues)    
             return redirect(url_for(category))
             
         else:
@@ -315,6 +408,9 @@ def edit_subscription(category,id):
             elif category == "family_subscriptions":                
                 subscription = db.family_subscriptions.find_one(query)
                 data = ["Family","family_subscriptions"]
+            elif category == "zam_subscriptions":                
+                subscription = db.zam_subscriptions.find_one(query)
+                data = ["Zam","zam_subscriptions"]
             return render_template("edit-subscription.html",data=data,sub=subscription)
     else:
         return redirect(url_for("login"))
@@ -371,6 +467,7 @@ def all_subscriptions():
         data4 = db.fifty_pound.find()
         data5 = db.sixty_five_pound.find()
         data6 = db.family_subscriptions.find()
+        data7 = db.zam_subscriptions.find()
         lists = []
         for i in data1:            
             i.update({"_id": str(i["_id"]),"category":"35"})
@@ -390,11 +487,77 @@ def all_subscriptions():
         for i in data6:            
             i.update({"_id": str(i["_id"]),"category":"Family"})
             lists.append(i)
+        for i in data7:            
+            i.update({"_id": str(i["_id"]),"category":"Zam"})
+            lists.append(i)
         return render_template("all-subscriptions.html",data=lists)
     else:
         return redirect(url_for("login"))
 
+@app.route("/report")
+def report():  
+    if "loggedin" in session:
+        a = db.thirty_five_pound.find()
+        b = db.fourty_pound.find()
+        c = db.fourty_five_pound.find()
+        d = db.fifty_pound.find()
+        e = db.sixty_five_pound.find()
+        f = db.family_subscriptions.find()
+        g = db.zam_subscriptions.find()
+        lists = []
+        prices = []
+        for i in a:            
+            i.update({"_id": str(i["_id"]),"category":"35"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in b:            
+            i.update({"_id": str(i["_id"]),"category":"40"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in c:            
+            i.update({"_id": str(i["_id"]),"category":"45"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in d:            
+            i.update({"_id": str(i["_id"]),"category":"50"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in e:            
+            i.update({"_id": str(i["_id"]),"category":"65"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in f:            
+            i.update({"_id": str(i["_id"]),"category":"Family"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        for i in g:            
+            i.update({"_id": str(i["_id"]),"category":"Zam"})
+            sold_price = float(i["sold_price"])
+            prices.append(sold_price)
+            lists.append(i)
+        total = sum(map(float,prices))
+        total_subs = len(lists)
+
+        
+        one = db.thirty_five_pound.count()
+        two = db.fourty_pound.count()
+        three = db.fourty_five_pound.count()
+        four = db.fifty_pound.count()
+        five = db.sixty_five_pound.count()
+        six = db.family_subscriptions.count()
+        seven = db.zam_subscriptions.count()
+        data = [one,two,three,four,five,six,seven]
+        return render_template("report.html",total_price = total, total_subs = total_subs, data=data)
+    else:
+        return redirect(url_for("login"))
 
 
+scheduler.start()
 if __name__ == '__main__':
     app.run(debug=True)

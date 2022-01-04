@@ -36,9 +36,9 @@
 </style>
 {% endblock %}
 {% block main %} 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 groot-white">
 
-    <h2 class="mt-2">Edit {{data[0]}} &pound; Subscription</h2>
+    <h2 class="mt-2 ">Edit {{data[0]}} &pound; Subscription</h2>
     <div class="container-fluid">
     <form action="/edit-subscription/{{data[1]}}/{{sub._id}}" method="post">
         <div class="mb-3">
@@ -81,7 +81,7 @@
           <label class="date_label" for="payment_due">Payment Due</label>
           <input class="dateee" type="text" name="payment_due" id="payment_due" value="{{sub.payment_due}}">
         </div>
-        <button onclick="return conf_delete()" type="submit" class="btn btn-outline-success my-4">Update Subscription</button>
+        <button style="color: white;" onclick="return conf_delete()" type="submit" class="btn btn-outline-success my-4">Update Subscription</button>
       </form>
     </div>
 </main>

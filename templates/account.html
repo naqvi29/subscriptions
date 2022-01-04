@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block title %} Admin Account {% endblock %}
 {% block main %} 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 groot-white">
     <h2 class="mt-2">Admin Account</h2>
     <div class="container-fluid">
     <form action='/edit-admin-account'>
@@ -13,7 +13,7 @@
           <label for="exampleInputName1" class="form-label">Password</label>
           <input type="text" name="password" class="form-control" id="exampleInputName1" value="{{data.password}}" disabled>
         </div>
-        <button type="submit" class="btn btn-outline-secondary my-4">Edit Account</button>
+        <button  style="color: white;" type="submit" class="btn btn-outline-secondary my-4">Edit Account</button>
       </form>
     </div>
 </main>

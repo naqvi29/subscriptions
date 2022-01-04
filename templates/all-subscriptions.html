@@ -3,7 +3,7 @@
 {% block main %}
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-    <h2 class="mt-2">All Subscriptions</h2>
+    <h2 class="mt-2 groot-white">All Subscriptions</h2>
     <div class="table-responsive">
         <table style="font-size: 1em; font-family: 'Mukta', sans-serif;" id="example" class="display hover cell-border stripe compact nowrap" style="width:100%">
             <thead>
@@ -34,7 +34,7 @@
                     <td>{{data.sold_price}} &pound;</td>
                     <td>{{data.new_price}} &pound;</td>
                     <td>{{data.payment_due}}</td>
-                    {% if data.category == 'Family' %} 
+                    {% if data.category == 'Family' or 'Zam' %} 
                     <td>{{data.category}}</td>
                     {% else %} 
                     <td>{{data.category}} &pound;</td>

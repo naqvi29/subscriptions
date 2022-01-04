@@ -1,0 +1,14 @@
+
+body {
+background-image: url("/static/img/backgrounds/yt.jpg");
+background-color: white;
+background-repeat: no-repeat;
+background-size: cover;
+background-attachment: fixed;
+}
+/* body background-image {
+    opacity: 0.2;
+} */
+.groot-white{
+    color: white;
+}
